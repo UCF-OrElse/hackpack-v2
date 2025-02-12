@@ -53,6 +53,8 @@ jobs:
       if: steps.last_release.outputs.date
       env:
         GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+      with:
+        token: ${{ secrets.WORKFLOW_TOKEN }}
       run: |
         gh release delete ${{ steps.last_release.outputs.date }} \
           --cleanup-tag -y 2>/dev/null || true
