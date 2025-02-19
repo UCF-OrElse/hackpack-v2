@@ -27,8 +27,8 @@ struct SuffixAutomaton {
 				int q = a[p].next[c];
 				if (a[p].len + 1 == a[q].len) a[cur].link = q;
 				else {
-					a.push_back(a[q]);
-					a.back().len = a[p].len + 1;
+					a.push_back({a[p].len+1, a[q].pos, 0, a[q].link, 
+						a[q].next});
 					for(; p >= 0 && a[p].next[c] == q; p = a[p].link)
 						a[p].next[c] = sz(a)-1;
 					a[q].link = a[cur].link = sz(a)-1;
