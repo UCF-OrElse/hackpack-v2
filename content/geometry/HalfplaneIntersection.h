@@ -23,7 +23,7 @@ struct HalfPlane {
 };
 
 vector<P> hpIntersection(vector<HalfPlane> hps) {
-	stable_sort(all(hps));
+	sort(all(hps));
 	int n = sz(hps), l = 1, r = 0;
 	vector<HalfPlane> dq(n+1);
 	rep(i, 0, n) {
