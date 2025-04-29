@@ -52,7 +52,7 @@ struct Tree {
 		while (l < r) {
 			if (l & 1) sml = op(sml, d[l++]);
 			if (r & 1) smr = op(d[--r], smr);
-			l /= 2, r /= 2;
+			l /= 2; r /= 2;
 		}
 		return op(sml, smr);
 	}
@@ -63,7 +63,7 @@ struct Tree {
 		while (l < r) {
 			if (l & 1) fid(l++, f);
 			if (r & 1) fid(--r, f);
-			l /= 2, r /= 2;
+			l /= 2; r /= 2;
 		}
 		l = l2; r = r2;
 		tip check(update);
