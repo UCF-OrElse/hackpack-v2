@@ -1,0 +1,3 @@
+&> - redirect both standard out and standard error
+> - overwrite
+>> - append
