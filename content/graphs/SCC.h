@@ -17,21 +17,21 @@
 
 vi tin, comp, z, cont;
 int Time, ncomps;
-template<class G, class F> int dfs(int u, G& g, F& f) {
-	int low = tin[u] = ++Time, x; z.push_back(u);
-	for (auto v : g[u]) if (comp[v] < 0)
-		low = min(low, tin[v] ?: dfs(v,g,f));
+template<class G, class F> int dfs(int cur, G& g, F& f) {
+	int low = tin[cur] = ++Time, x; z.push_back(cur);
+	for (auto nxt : g[cur]) if (comp[nxt] < 0)
+		low = min(low, tin[nxt] ?: dfs(nxt,g,f));
 
-	if (low == tin[u]) {
+	if (low == tin[cur]) {
 		do {
 			x = z.back(); z.pop_back();
 			comp[x] = ncomps;
 			cont.push_back(x);
-		} while (x != u);
+		} while (x != cur);
 		f(cont); cont.clear();
 		ncomps++;
 	}
-	return tin[u] = low;
+	return tin[cur] = low;
 }
 template<class G, class F> void scc(G& g, F f) {
 	int n = sz(g);

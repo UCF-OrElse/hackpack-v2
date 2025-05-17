@@ -23,16 +23,16 @@ vi tin, st;
 vector<vector<pii>> ed;
 int Time;
 template<class F>
-int dfs(int u, int par, F& f) {
-	int me = tin[u] = ++Time, low = me;
-	for (auto [v, e] : ed[u]) if (e != par) {
-		if (tin[v]) {
-			low = min(low, tin[v]);
-			if (tin[v] < me)
+int dfs(int cur, int par, F& f) {
+	int me = tin[cur] = ++Time, low = me;
+	for (auto [nxt, e] : ed[cur]) if (e != par) {
+		if (tin[nxt]) {
+			low = min(low, tin[nxt]);
+			if (tin[nxt] < me)
 				st.push_back(e);
 		} else {
 			int si = sz(st);
-			int up = dfs(v, e, f);
+			int up = dfs(nxt, e, f);
 			low = min(low, up);
 			if (up >= me) { // e is a bridge if up > me
 				st.push_back(e);
