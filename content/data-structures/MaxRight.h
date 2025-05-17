@@ -9,6 +9,7 @@
 #pragma once
 
 int max_right(int l, auto g) {
+	assert(g(ego()));
 	l += size;
 	dip push(l >> i);
 	S sm = ego();
