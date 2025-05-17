@@ -17,7 +17,8 @@ template <class F> struct edge_cd {
 	vvi adj;
 	F f;
 	vi sub_sz;
-	edge_cd(const vvi& adj, F f) : adj(adj), f(f), sub_sz(sz(adj)) {
+	edge_cd(const vvi& adj, F f) : adj(adj), f(f), 
+		sub_sz(sz(adj)) {
 		dfs(0, sz(adj) - 1);
 	}
 	int find_cent(int u, int p, int siz) {
