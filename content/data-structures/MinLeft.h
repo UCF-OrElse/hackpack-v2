@@ -13,14 +13,13 @@ int min_left(int r, auto g) {
 	dip push((r - 1) >> i);
 	S sm = ego();
 	do {
-		r--;
-		while (r > 1 && (r % 2)) r /= 2;
+		for (r--; r > 1 && (r % 2);) r /= 2;
 		if (!g(op(d[r], sm))) {
-		while (r < size) {
-			push(r);
-			if (g(op(d[r = 2*r+1], sm))) sm = op(d[r--], sm);
-		}
-		return r + 1 - size;
+			while (r < size) {
+				push(r);
+				if (g(op(d[r = 2*r+1], sm))) sm = op(d[r--], sm);
+			}
+			return r + 1 - size;
 		}
 		sm = op(d[r], sm);
 	} while ((r & -r) != r);
