@@ -9,6 +9,7 @@
 #pragma once
 
 int min_left(int r, auto g) {
+	assert(g(ego()));
 	r += size;
 	dip push((r - 1) >> i);
 	S sm = ego();
