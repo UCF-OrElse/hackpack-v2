@@ -1,54 +1,56 @@
 /**
- * Author: Simon Lindholm
- * Date: 2016-12-09
- * License: CC0
- * Source: http://www.mimuw.edu.pl/~mucha/pub/mucha_sankowski_focs04.pdf
- * Description: Matching for general graphs.
- * Fails with probability $N / mod$.
- * Time: O(N^3)
- * Status: not very well tested
+ * Author: bicsi
+ * Source: https://codeforces.com/blog/entry/92339?#comment-810242
+ * Description: Given a graph, finds a set of edges such that no node 
+ * is incident to more than one edge in the set.
+ * Time: O(VE)
+ * Status: tested on 2021 Asia Shanghai Problem L
  */
 #pragma once
 
-#include "../numerical/MatrixInverse-mod.h"
-
-vector<pii> generalMatching(int N, vector<pii>& ed) {
-	vector<vector<ll>> mat(N, vector<ll>(N)), A;
-	for (pii pa : ed) {
-		int a = pa.first, b = pa.second, r = rand() % mod;
-		mat[a][b] = r, mat[b][a] = (mod - r) % mod;
-	}
-
-	int r = matInv(A = mat), M = 2*N - r, fi, fj;
-	assert(r % 2 == 0);
-
-	if (M != N) do {
-		mat.resize(M, vector<ll>(M));
-		rep(i,0,N) {
-			mat[i].resize(M);
-			rep(j,N,M) {
-				int r = rand() % mod;
-				mat[i][j] = r, mat[j][i] = (mod - r) % mod;
-			}
+vi Blossom(vector<vi>& adj) {
+	int n = adj.size(), T = -1;
+	vi mate(n, -1), label(n), par(n), orig(n), aux(n, -1), q;
+	auto lca = [&](int x, int y) {
+		for (T++;; swap(x, y)) {
+			if (x == -1) continue;
+			if (aux[x] == T) return x;
+			aux[x] = T;
+			x = (mate[x] == -1 ? -1 : orig[par[mate[x]]]);
 		}
-	} while (matInv(A = mat) != M);
-
-	vi has(M, 1); vector<pii> ret;
-	rep(it,0,M/2) {
-		rep(i,0,M) if (has[i])
-			rep(j,i+1,M) if (A[i][j] && mat[i][j]) {
-				fi = i; fj = j; goto done;
-		} assert(0); done:
-		if (fj < N) ret.emplace_back(fi, fj);
-		has[fi] = has[fj] = 0;
-		rep(sw,0,2) {
-			ll a = modpow(A[fi][fj], mod-2);
-			rep(i,0,M) if (has[i] && A[i][fj]) {
-				ll b = A[i][fj] * a % mod;
-				rep(j,0,M) A[i][j] = (A[i][j] - A[fi][j] * b) % mod;
-			}
-			swap(fi,fj);
+	};
+	auto blossom = [&](int v, int w, int a) {
+		while (orig[v] != a) {
+			par[v] = w;
+			w = mate[v];
+			if (label[w] == 1) label[w] = 0, q.push_back(w);
+			orig[v] = orig[w] = a, v = par[w];
 		}
-	}
-	return ret;
+	};
+	auto augment = [&](int v) {
+		while (v != -1) {
+			int pv = par[v], nv = mate[pv];
+			mate[v] = pv, mate[pv] = v, v = nv;
+		}
+	};
+	auto bfs = [&](int root) {
+		fill(all(label), -1), iota(all(orig), 0);
+		q.clear(), q.push_back(root), label[root] = 0;
+		for (int i = 0; i < sz(q); i++) {
+			int v = q[i];
+			for (auto x : adj[v])
+				if (label[x] == -1) {
+					label[x] = 1, par[x] = v;
+					if (mate[x] == -1) return augment(x);
+					label[mate[x]] = 0, q.push_back(mate[x]);
+				} else if (label[x] == 0 && orig[v] != orig[x]) {
+					int a = lca(orig[v], orig[x]);
+					blossom(x, v, a), blossom(v, x, a);
+				}
+		}
+	};
+	// Time halves if you start with (any) maximal matching.
+	for (int i = 0; i < n; i++)
+		if (mate[i] == -1) bfs(i);
+	return mate;
 }
