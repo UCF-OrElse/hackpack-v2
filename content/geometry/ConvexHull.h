@@ -5,6 +5,7 @@
 \\\begin{minipage}{75mm}
 Returns a vector of the points of the convex hull in counter-clockwise order.
 Points on the edge of the hull between two other points are not considered part of the hull.
+Be careful of duplicate points when working with degenerate hulls.
 \end{minipage}
 \begin{minipage}{15mm}
 \vspace{-6mm}
