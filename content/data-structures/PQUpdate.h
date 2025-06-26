@@ -2,7 +2,7 @@
  * Author: Andy Phan
  * Date: 2025-01-25
  * License: CC0
- * Source: me
+ * Source: based on https://codeforces.com/blog/entry/111117
  * Description: T: value/update type. DS: Stores T.
  * Same semantics as std::priority\_queue.
  * Time: O(U \log N).
