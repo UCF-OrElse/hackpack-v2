@@ -21,7 +21,7 @@ struct mcmf {
 	vector<edge> edges;
 	vvi adj; vii par; vi in_q;
 	vector<ll> dist, pi;
-	mcmf(int n): n(n), adj(n), dist(n), pi(n), par(n), in_q(n) {}
+	mcmf(int n): n(n), adj(n), par(n), in_q(n), dist(n), pi(n) {}
 	void add_edge(int u, int v, ll cap, ll cost) {
 		int idx = sz(edges);
 		edges.push_back({v, cap, 0, cost});
@@ -53,7 +53,6 @@ struct mcmf {
 	pair<ll, ll> calc(int s, int t) {
 		ll flow = 0, cost = 0;
 		while(find_path(s, t)) {
-			rep(i, 0, n) pi[i] = min(pi[i] + dist[i], inf);
 			ll f = inf;
 			for(int i, u, v = t; tie(u, i) = par[v], v != s; v = u)
 				f = min(f, edges[i].cap - edges[i].flow);
