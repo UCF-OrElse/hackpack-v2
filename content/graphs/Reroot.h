@@ -10,8 +10,10 @@
 
 using T = pair<ll, ll>;
 T init() { return {1, 0}; }
-T combine(T a, T b) { return {a.first + b.first, a.second + b.second + b.first}; }
-T decombine(T a, T b) { return {a.first - b.first, a.second - b.second - b.first}; }
+T combine(T a, T b) { return {a.first + b.first,
+		a.second + b.second + b.first}; }
+T decombine(T a, T b) { return {a.first - b.first,
+		a.second - b.second - b.first}; }
 
 vector<vi> adj;
 vector<T> dp, dpr;
