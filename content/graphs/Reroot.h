@@ -17,21 +17,21 @@ vector<vi> adj;
 vector<T> dp, dpr;
 
 T dfs(int u, int p) {
-    dp[u] = init();
-    for (int v: adj[u]) {
-        if (v == p) continue;
-        dp[u] = combine(dp[u], dfs(v, u));
-    }
-    return dp[u];
+	dp[u] = init();
+	for (int v : adj[u]) {
+		if (v == p) continue;
+		dp[u] = combine(dp[u], dfs(v, u));
+	}
+	return dp[u];
 }
 
 T dfsr(int u, int p, T dpr_p = init()) {
-    dpr[u] = dp[u];
-    if (p != u) dpr[u] = combine(dpr[u], dpr_p);
-    for (int v: adj[u]) {
-        if (v == p) continue;
-        T dec = decombine(dpr[u], dp[v]);
-        dfsr(v, u, dec);
-    }
-    return dpr[u];
+	dpr[u] = dp[u];
+	if (p != u) dpr[u] = combine(dpr[u], dpr_p);
+	for (int v : adj[u]) {
+		if (v == p) continue;
+		T dec = decombine(dpr[u], dp[v]);
+		dfsr(v, u, dec);
+	}
+	return dpr[u];
 }
