@@ -3,11 +3,11 @@
  * Date: 2017-04-17
  * License: CC0
  * Source: folklore
- * Description: Finds all biconnected components in an undirected graph, and
- *  runs a callback for the edges in each. In a biconnected component there
+ * Description: Finds all 2VCCs in an undirected graph, and
+ *  runs a callback for the edges in each (and also on bridges). In a 2VCC there
  *  are at least two distinct paths between any two nodes. Note that a node can
  *  be in several components. An edge which is not in a component is a bridge,
- *  i.e., not part of any cycle.
+ *  i.e., not part of any cycle, but the callback is still run on it.
  * Usage:
  *  int eid = 0; ed.resize(N);
  *  for each edge (a,b) {
